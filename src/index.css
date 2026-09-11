@@ -1,5 +1,28 @@
 @import "tailwindcss";
 
+@theme {
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-cream: #fbf6ef;
+  --color-cream-dark: #f3eade;
+  --color-ink: #2a211d;
+  --color-ink-soft: #6b5f58;
+  --color-clay: #c1613f;
+  --color-clay-dark: #9c4c30;
+  --color-clay-light: #f3ddd0;
+  --color-plum: #6d4a63;
+  --color-sage: #7f9377;
+}
+
 body {
-  @apply bg-slate-50 text-slate-900 antialiased;
+  @apply bg-cream text-ink antialiased;
+  font-family: var(--font-sans);
+  background-image: radial-gradient(circle at 15% 0%, rgba(193, 97, 63, 0.08), transparent 45%),
+    radial-gradient(circle at 85% 10%, rgba(109, 74, 99, 0.08), transparent 40%);
+  background-attachment: fixed;
+}
+
+.font-display {
+  font-family: var(--font-display);
 }

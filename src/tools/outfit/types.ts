@@ -3,6 +3,7 @@ export type ClothingCategory =
   | 'bottom'
   | 'shoes'
   | 'outerwear'
+  | 'watch'
   | 'accessory';
 
 export type Pattern = 'solid' | 'subtle' | 'bold';
@@ -20,12 +21,15 @@ export interface ClothingItem {
   id: string;
   name: string;
   category: ClothingCategory;
-  /** Hex color, e.g. #1f2937 */
+  /** Hex color, auto-detected from the photo or set manually, e.g. #1f2937 */
   color: string;
   pattern: Pattern;
   /** 1 = very casual, 5 = very formal */
   formality: 1 | 2 | 3 | 4 | 5;
   seasons: Season[];
+  /** JPEG photo of the item, stored alongside metadata in IndexedDB */
+  photo: Blob;
+  createdAt: number;
 }
 
 export interface Outfit {
@@ -33,6 +37,7 @@ export interface Outfit {
   bottom?: ClothingItem;
   shoes?: ClothingItem;
   outerwear?: ClothingItem;
+  watch?: ClothingItem;
   accessory?: ClothingItem;
 }
 
@@ -41,6 +46,24 @@ export interface ScoredOutfit {
   score: number;
   reasons: string[];
 }
+
+export const CATEGORY_LABELS: Record<ClothingCategory, string> = {
+  top: 'Tops',
+  bottom: 'Bottoms',
+  shoes: 'Shoes',
+  outerwear: 'Outerwear',
+  watch: 'Watches',
+  accessory: 'Accessories',
+};
+
+export const CATEGORY_EMOJI: Record<ClothingCategory, string> = {
+  top: '👕',
+  bottom: '👖',
+  shoes: '👟',
+  outerwear: '🧥',
+  watch: '⌚',
+  accessory: '👜',
+};
 
 export const OCCASION_LABELS: Record<Occasion, string> = {
   casual: 'Casual',
@@ -63,4 +86,11 @@ export const SEASON_LABELS: Record<Season, string> = {
   mild: 'Mild',
   cold: 'Cold',
   rainy: 'Rainy',
+};
+
+export const SEASON_EMOJI: Record<Season, string> = {
+  hot: '☀️',
+  mild: '⛅',
+  cold: '❄️',
+  rainy: '🌧️',
 };

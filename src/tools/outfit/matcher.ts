@@ -19,7 +19,7 @@ function fitsContext(item: ClothingItem, occasion: Occasion, weather: Season): b
 }
 
 function scoreOutfit(outfit: Outfit, occasion: Occasion): ScoredOutfit {
-  const pieces = [outfit.top, outfit.bottom, outfit.shoes, outfit.outerwear, outfit.accessory].filter(
+  const pieces = [outfit.top, outfit.bottom, outfit.shoes, outfit.outerwear, outfit.watch, outfit.accessory].filter(
     (item): item is ClothingItem => Boolean(item),
   );
 
@@ -70,6 +70,7 @@ export function findBestOutfits(
   const shoes = byCategory(wardrobe, 'shoes').filter((i) => fitsContext(i, occasion, weather));
   const outerwear = byCategory(wardrobe, 'outerwear').filter((i) => fitsContext(i, occasion, weather));
   const accessories = byCategory(wardrobe, 'accessory').filter((i) => fitsContext(i, occasion, weather));
+  const watches = byCategory(wardrobe, 'watch').filter((i) => fitsContext(i, occasion, weather));
 
   const results: ScoredOutfit[] = [];
 
@@ -81,10 +82,13 @@ export function findBestOutfits(
           weather === 'cold' || weather === 'rainy' ? outerwear.length ? outerwear : [undefined] : [undefined];
         const accessoryOptions: (ClothingItem | undefined)[] =
           accessories.length ? [undefined, ...accessories] : [undefined];
+        const watchOptions: (ClothingItem | undefined)[] = watches.length ? [undefined, ...watches] : [undefined];
 
         for (const outer of outerOptions) {
           for (const accessory of accessoryOptions) {
-            results.push(scoreOutfit({ ...base, outerwear: outer, accessory }, occasion));
+            for (const watch of watchOptions) {
+              results.push(scoreOutfit({ ...base, outerwear: outer, accessory, watch }, occasion));
+            }
           }
         }
       }

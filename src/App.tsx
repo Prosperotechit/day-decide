@@ -1,15 +1,16 @@
 import { Route, Routes } from 'react-router-dom';
-import { Home } from './pages/Home';
-import { OutfitMatchPage } from './tools/outfit/OutfitMatchPage';
-import { RoomLayoutPage } from './tools/room/RoomLayoutPage';
+import { Layout } from './components/Layout';
+import { MatchPage } from './tools/outfit/MatchPage';
+import { WardrobePage } from './tools/outfit/WardrobePage';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/outfit" element={<OutfitMatchPage />} />
-      <Route path="/room" element={<RoomLayoutPage />} />
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<WardrobePage />} />
+        <Route path="/match" element={<MatchPage />} />
+      </Routes>
+    </Layout>
   );
 }
 
